@@ -40,6 +40,13 @@ interface EnvironmentInterface {
 	public function get_has_wp_rocket() : bool;
 
 	/**
+	 * Returns if SiteGround Optimizer is running in the current environment.
+	 *
+	 * @return bool
+	 */
+	public function get_has_sg_optimizer() : bool;
+
+	/**
 	 * Returns the domain for the site
 	 *
 	 * @return string

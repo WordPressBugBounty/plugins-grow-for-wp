@@ -27,6 +27,9 @@ class Environment implements EnvironmentInterface {
 	/** @var bool Whether this installation has WP Rocket Running */
 	private bool $has_wp_rocket;
 
+	/** @var bool Whether this installation has SiteGround Optimizer */
+	private bool $has_sg_optimizer;
+
 	/** @var string Domain of the Site */
 	private string $domain;
 
@@ -75,6 +78,13 @@ class Environment implements EnvironmentInterface {
 	 */
 	public function get_has_wp_rocket() : bool {
 		return $this->has_wp_rocket;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function get_has_sg_optimizer() : bool {
+		return $this->has_sg_optimizer;
 	}
 
 	/**
@@ -140,13 +150,14 @@ class Environment implements EnvironmentInterface {
 	 * Run the environmental checks
 	 */
 	public function __construct() {
-		$this->has_grow_social = class_exists('\Social_Pug');
-		$this->has_mcp         = class_exists('\Mediavine\MCP\MV_Control_Panel');
-		$this->has_wp_rocket   = defined( 'WP_ROCKET_VERSION' );
-		$this->domain          = WordPress::site_domain();
-		$this->path            = WordPress::site_path();
-		$this->home_url        = WordPress::home_url();
-		$this->site_title      = WordPress::site_title();
+		$this->has_grow_social  = class_exists('\Social_Pug');
+		$this->has_mcp          = class_exists('\Mediavine\MCP\MV_Control_Panel');
+		$this->has_wp_rocket    = defined( 'WP_ROCKET_VERSION' );
+		$this->has_sg_optimizer = function_exists('sg_cachepress_purge_cache');
+		$this->domain           = WordPress::site_domain();
+		$this->path             = WordPress::site_path();
+		$this->home_url         = WordPress::home_url();
+		$this->site_title       = WordPress::site_title();
 
 		$this->has_create = class_exists( '\Mediavine\Create\Plugin' );
 		if ( $this->has_create ) {

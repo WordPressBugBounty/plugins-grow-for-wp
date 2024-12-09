@@ -43,6 +43,13 @@ class AdsScript implements HasWordpressHooksInterface {
 			$this->filters[] = new HookArguments( 'rocket_defer_inline_exclusions', 'add_rocket_js_exclusions' );
 			$this->filters[] = new HookArguments( 'rocket_minify_excluded_external_js', 'add_rocket_js_exclusions_by_domain' );
 		}
+
+		// Handle SiteGround Speed Optimizer integration, if it is installed.
+		if ( $this->environment->get_has_sg_optimizer() ) {
+			$this->filters[] = new HookArguments( 'sgo_js_minify_exclude', 'add_sg_js_exclusions' );
+			$this->filters[] = new HookArguments( 'sgo_javascript_combine_exclude', 'add_sg_js_exclusions' );
+			$this->filters[] = new HookArguments( 'sgo_javascript_combine_excluded_external_paths', 'add_sg_optimizer_exclusions_by_domain' );
+		}
 	}
 
 	/**
@@ -115,6 +122,26 @@ class AdsScript implements HasWordpressHooksInterface {
 	}
 
 	/**
+	 * Exclude scripts from SiteGround Speed Optimizer JS combine and exclude.
+	 *
+	 * @param array $excluded List of excluded JS config.
+	 *
+	 * @return array
+	 */
+	public function add_sg_js_exclusions( $excluded = array() ) {
+		// Fail gracefully in case SiteGround decides to change how the parameter
+		// gets passed in the future.
+		if ( ! is_array( $excluded ) ) {
+			return $excluded;
+		}
+
+		$excluded[] = 'journeymv';
+		$excluded[] = 'scriptwrapper';
+
+		return $excluded;
+	}
+
+	/**
 	 * Exclude scripts from WP Rocket JS combine and minify.
 	 *
 	 * @param array $excluded List of excluded JS domains.
@@ -122,6 +149,27 @@ class AdsScript implements HasWordpressHooksInterface {
 	 * @return array
 	 */
 	public function add_rocket_js_exclusions_by_domain( $excluded = array() ) {
+		// Fail gracefully in case WP Rocket decides to change how the parameter
+		// gets passed in the future.
+		if ( ! is_array( $excluded ) ) {
+			return $excluded;
+		}
+
+		$excluded[] = 'journeymv.com';
+		$excluded[] = 'scriptwrapper.com';
+
+		return $excluded;
+	}
+
+	/**
+	 * Exclude scripts from SG Optimizer JS combine and minify.
+	 *
+	 * @param array $excluded List of excluded JS domains.
+	 *
+	 * @return array
+	 */
+	public function add_sg_optimizer_exclusions_by_domain( $excluded = array() ) {
+		echo 'balls';
 		// Fail gracefully in case WP Rocket decides to change how the parameter
 		// gets passed in the future.
 		if ( ! is_array( $excluded ) ) {

@@ -2,9 +2,9 @@
 Contributors: teamgrow
 Tags: social, sharing, grow, subscribe
 Requires at least: 5.2
-Tested up to: 6.6
+Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,9 +104,12 @@ Absolutely! Grow is for the world. We're all about empowering content creators b
 
 # Changelog
 
+## 1.5.1 - 2024-12-09
+ - Prevent plugin from being optimized in some third-party site optimization plugins.
+ 
 ## 1.5.0 - 2024-07-16
  - Fix issues with blank page appearing when attempting to enable Journey.
- - Fix issues with Redirection plugin when Journey is enabled.
+ - Fix issues with Redirectin plugin when Journey is enabled.
 
 ## 1.4.1 - 2024-06-24
  - Fix issue with duplicate Journey ad slots with newer versions of Create by Mediavine.

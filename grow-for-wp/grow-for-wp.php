@@ -3,7 +3,7 @@
  * Plugin Name:         Grow for WP
  * Plugin URI:          https://grow.me/publishers
  * Description:         Integrate your WordPress Site with Grow
- * Version:             1.5.0
+ * Version:             1.5.1
  * Requires at least:   5.2
  * Requires PHP:        7.4
  * Author:              Grow
