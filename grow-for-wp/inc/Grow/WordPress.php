@@ -25,7 +25,7 @@ class WordPress implements OptionProviderInterface {
 		}
 		return array_map(function ( $val ) {
 			return strval( $val );
-		}, get_plugin_data(GROW_PLUGIN_DIR . '/grow-for-wp.php', false, true));
+		}, get_plugin_data(GROW_PLUGIN_DIR . '/grow-for-wp.php', false, false));
 	}
 
 	/**

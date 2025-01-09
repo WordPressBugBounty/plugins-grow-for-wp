@@ -2,9 +2,9 @@
 Contributors: teamgrow
 Tags: social, sharing, grow, subscribe
 Requires at least: 5.2
-Tested up to: 6.5.3
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,9 @@ Absolutely! Grow is for the world. We're all about empowering content creators b
 
 # Changelog
 
+## 1.5.2 - 2025-01-08
+ - Fix issue with textdomain debugging notice appearing.
+
 ## 1.5.1 - 2024-12-09
  - Prevent plugin from being optimized in some third-party site optimization plugins.
  
@@ -177,4 +180,3 @@ Absolutely! Grow is for the world. We're all about empowering content creators b
 ## 0.1.1 - 2023-06-20
   * feat: Add changelog Generation
   * fix: Direct Users to correct Grow Site
-

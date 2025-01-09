@@ -3,7 +3,7 @@
         'name' => 'mediavine/grow',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '84df357fd773d04efdf322b839cf39d67df0dcf0',
+        'reference' => '3e42a382c18fae06a81d8530ef59b10861e22ec1',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'mediavine/grow' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '84df357fd773d04efdf322b839cf39d67df0dcf0',
+            'reference' => '3e42a382c18fae06a81d8530ef59b10861e22ec1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
