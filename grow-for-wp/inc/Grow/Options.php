@@ -9,6 +9,20 @@ namespace Grow;
  */
 class Options implements OptionsInterface {
 
+	/** @var array<string, string|null|mixed> $options_values  */
+	private array $options_values = [
+		'grow_site_id'                            => null,
+		'grow_site_uuid'                          => null,
+		'grow_first_install'                      => null,
+		'grow_current_version'                    => null,
+		'grow_first_install_version'              => null,
+		'grow_just_activated'                     => null,
+		'grow_journey_status'                     => null,
+		'grow_ads_txt_method'                     => null,
+		'grow_ads_txt_redirect_check_in_progress' => null,
+		'grow_show_need_connection_message'       => null,
+	];
+
 	/** @var OptionProviderInterface Allows access to WordPress core option getting and setting functions */
 	public OptionProviderInterface $option_provider;
 
@@ -219,9 +233,13 @@ class Options implements OptionsInterface {
 	 * @return bool
 	 */
 	private function set( string $key, string $value ) : bool {
+		if ( ! array_key_exists($key, $this->options_values) ) {
+			return false;
+		}
 		$success = $this->option_provider::update_option( $key, $value );
 		if ( $success ) {
-			$this->{$key} = $value;
+			$this->options_values[ $key ] = $value;
+
 		}
 		return $success;
 	}
@@ -232,16 +250,22 @@ class Options implements OptionsInterface {
 	 *
 	 * @param string $key    Key for the option
 	 * @param mixed  $default The value to be returned if no value is present in the database
-	 * @param bool   $force check the database again even if we have a value in memoryd value is empty    If true, this will always force a check of the value in the database regardless of what
+	 * @param bool   $force If true, this will always force a check of the value in the database regardless of what
 	 *                         value this class has
 	 *
 	 * @return mixed|null
 	 */
 	private function get( string $key, $default = null, bool $force = false ) {
-		if ( isset( $this->{$key} ) && ! $force ) {
-			return $this->{$key};
+		if ( ! array_key_exists($key, $this->options_values) ) {
+			return null;
 		}
-		$this->{$key} = $this->option_provider::get_option( $key, $default ) ?? '';
-		return $this->{$key};
+
+		if ( isset( $this->options_values[ $key ] ) && ! $force ) {
+			return $this->options_values[ $key ];
+		}
+		$this->options_values[ $key ] = $this->option_provider::get_option( $key, $default ) ?? '';
+		return $this->options_values[ $key ];
 	}
+
+
 }

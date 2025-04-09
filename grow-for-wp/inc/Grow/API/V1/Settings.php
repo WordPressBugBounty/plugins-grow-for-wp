@@ -40,7 +40,7 @@ class Settings {
 	private static function grow_site_id() : array {
 		return [
 			'type'        => 'string',
-			'description' => esc_html__( 'Grow Site ID', 'grow-for-wp' ),
+			'description' => 'Grow Site ID',
 		];
 	}
 }

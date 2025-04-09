@@ -16,7 +16,7 @@ use Grow\Views\ViewLoaderInterface;
 class Plugin {
 
 	/** @var string|null VERSION */
-	const VERSION = '1.5.2';
+	const VERSION = '1.5.3';
 
 	/** @var Repository */
 	public Repository $repository;

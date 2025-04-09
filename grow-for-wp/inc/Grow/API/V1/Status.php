@@ -23,16 +23,16 @@ class Status {
 			'type'       => 'object',
 			'properties' => [
 				'version'   => [
-					'description' => esc_html__( 'Current Grow for WordPress version', 'grow-for-wp' ),
+					'description' => 'Current Grow for WordPress version',
 					'pattern'     => '^[\\d]+\\.[\\d]+\\.[\\d]$',
 					'type'        => [ 'null', 'string' ],
 				],
 				'connected' => [
-					'description' => esc_html__( 'Whether the site is connected to Grow', 'grow-for-wp' ),
+					'description' => 'Whether the site is connected to Grow',
 					'type'        => 'boolean',
 				],
 				'valid'     => [
-					'description' => esc_html__( 'Whether the passed id is the same as the connected id of the site', 'grow-for-wp' ),
+					'description' => 'Whether the passed id is the same as the connected id of the site',
 					'type'        => 'boolean',
 				],
 			],
@@ -49,7 +49,7 @@ class Status {
 		return [
 			'site_id' => [
 				'type'              => 'string',
-				'description'       => esc_html__( 'Site ID to check validity of', 'grow-for-wp' ),
+				'description'       => 'Site ID to check validity of',
 				'required'          => false,
 				'validate_callback' => function( $param ) {
 					return is_string( $param );

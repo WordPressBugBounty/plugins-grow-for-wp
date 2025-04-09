@@ -16,6 +16,11 @@ class AdsScript implements HasWordpressHooksInterface {
 	/** @var string $grow_journey_status Journey enabled/disabled status */
 	private string $grow_journey_status;
 
+	/** @var string $script_handle Handle for the mediavine script wrapper
+	 *  This is the same as the Mediavine Control Panel Script wrapper to take advantage of automations and integrations
+	 */
+	private string $script_handle = 'mv-script-wrapper';
+
 	/** @var EnvironmentInterface Provides access to environment related information */
 	private EnvironmentInterface $environment;
 
@@ -58,8 +63,10 @@ class AdsScript implements HasWordpressHooksInterface {
 	 * @return void
 	 */
 	public function enqueue_ads_script() {
+		// The MCP script handle is currently the same as the Journey Script Handle, but kept in a separate variable for clarity's sake
+		$mcp_script_handle = 'mv-script-wrapper';
 		// Check if MCP already doing this and stop gracefully, if so.
-		if ( $this->environment->get_has_mcp() && WordPress::wp_script_is( 'mv-script-wrapper' ) ) {
+		if ( $this->environment->get_has_mcp() && WordPress::wp_script_is( $mcp_script_handle ) ) {
 			return;
 		}
 
@@ -76,7 +83,7 @@ class AdsScript implements HasWordpressHooksInterface {
 			return;
 		}
 
-		WordPress::enqueue_script( 'mv-script-wrapper', 'https://scripts.scriptwrapper.com/tags/' . $this->grow_site_uuid . '.js' );
+		WordPress::enqueue_script( $this->script_handle, 'https://scripts.scriptwrapper.com/tags/' . $this->grow_site_uuid . '.js' );
 	}
 
 	/**
@@ -88,17 +95,33 @@ class AdsScript implements HasWordpressHooksInterface {
 	 * @return string
 	 */
 	public function add_script_attributes( $tag, $handle ) {
-		if ( 'mv-script-wrapper' !== $handle ) {
+		if ( $this->script_handle !== $handle ) {
 			return $tag;
 		}
 
-		$tag = str_replace( ' src', ' async="async" src', $tag );
-		$tag = str_replace( ' src', ' data-noptimize="1" src', $tag );
+		$tag = self::add_attribute( $tag, 'async', 'async' );
+		$tag = self::add_attribute( $tag, 'fetchpriority', 'high' );
+		$tag = self::add_attribute( $tag, 'data-noptimize', '1' );
 		// Disable Cloudflare Rocket Loader.
 		// @see https://developers.cloudflare.com/speed/optimization/content/rocket-loader/ignore-javascripts/ .
-		$tag = str_replace( ' src', ' data-cfasync="false" src', $tag );
+		$tag = self::add_attribute( $tag, 'data-cfasync', 'false' );
 
 		return $tag;
+	}
+
+	/**
+	 * Add an attribute to a passed in script tag
+	 *
+	 * @param string $tag Script Tag to add attribute to
+	 * @param string $attribute Attribute ato add
+	 * @param string $value value for attribute
+	 * @return string Tag with added attribute
+	 */
+	private static function add_attribute( $tag, $attribute, $value ) {
+		if ( str_contains($tag, ' ' . $attribute . '=') ) {
+			return $tag;
+		}
+		return str_replace( ' src', ' ' . $attribute . '="' . $value . '" src', $tag );
 	}
 
 	/**
